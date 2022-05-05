@@ -10,8 +10,10 @@
 	<groupId>com.yeemin</groupId>
 	<artifactId>ppgjcx</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+
 	<name>ppgjcx</name>
-	<description>Demo project for Spring Boot</description>
+	<description>品牌国籍查询</description>
+
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -31,16 +33,38 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-cache</artifactId>
-		  </dependency>
+		</dependency>
 
+		<!-- 基于磁盘内置一个h2数据库，原始数据存储 -->
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 		</dependency>
+
+		<!-- ehcache缓存 -->
 		<dependency>
 			<groupId>org.ehcache</groupId>
 			<artifactId>ehcache</artifactId>
-		  </dependency>
+		</dependency>
+
+		<!-- 使用lucene检索数据 -->
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-core</artifactId>
+			<version>9.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-analysis-common</artifactId>
+			<version>9.1.0</version>
+		</dependency>
+		<!-- 中文分词 -->
+		<dependency>
+			<groupId>com.ossez</groupId>
+			<artifactId>ik-analyzer</artifactId>
+			<version>3.2.8</version>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
