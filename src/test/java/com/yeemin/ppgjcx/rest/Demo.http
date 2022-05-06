@@ -7,3 +7,6 @@ Content-Type: application/json
     "address": "江苏省无锡市惠山区",
     "age": 28
 }
+
+###
+GET http://localhost:8081/demo/get/67eca4fb-5e3c-4c25-accf-733111a84ea0

@@ -43,8 +43,9 @@
 
 		<!-- ehcache缓存 -->
 		<dependency>
-			<groupId>org.ehcache</groupId>
+			<groupId>net.sf.ehcache</groupId>
 			<artifactId>ehcache</artifactId>
+			<version>2.10.9.2</version>
 		</dependency>
 
 		<!-- 使用lucene检索数据 -->

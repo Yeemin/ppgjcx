@@ -24,11 +24,10 @@ public class LuceneOperation implements SmartLifecycle {
 
     private IKAnalyzer ikAnalyzer;
 
-    private IndexWriterConfig indexWriterConfig;
 
     public void index(String id, Object object) {
         JSONObject jsonObject = (JSONObject) JSONObject.toJSON(object);
-        try (IndexWriter indexWriter = new IndexWriter(directory, indexWriterConfig)) {
+        try (IndexWriter indexWriter = new IndexWriter(directory, new IndexWriterConfig(ikAnalyzer))) {
             Document document = new Document();
             jsonObject.forEach((k, v) -> {
                 document.add(new TextField(k, String.valueOf(v), Store.YES));
@@ -44,7 +43,6 @@ public class LuceneOperation implements SmartLifecycle {
         try {
             directory = FSDirectory.open(Path.of("lucene/demo"));
             ikAnalyzer = new IKAnalyzer();
-            indexWriterConfig = new IndexWriterConfig(ikAnalyzer);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

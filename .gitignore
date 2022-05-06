@@ -36,3 +36,4 @@ build/
 /LUCENE
 /h2db
 /lucene
+/ehcache
