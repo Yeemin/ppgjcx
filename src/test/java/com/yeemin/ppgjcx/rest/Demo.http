@@ -1,0 +1,9 @@
+###
+POST http://localhost:8081/demo/add
+Content-Type: application/json
+
+{
+    "username": "生一鸣",
+    "address": "江苏省无锡市惠山区",
+    "age": 28
+}

@@ -34,3 +34,5 @@ build/
 
 ### LUCENE
 /LUCENE
+/h2db
+/lucene
