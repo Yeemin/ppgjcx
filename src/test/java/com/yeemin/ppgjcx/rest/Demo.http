@@ -9,4 +9,12 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8081/demo/get/cde2fe11-2329-4c50-b689-88bafc1f2f13
+GET http://localhost:8081/demo/get/c9cb8f8a-d0fc-4479-8f15-7d3b945122cf
+
+###
+POST http://localhost:8081/demo/query
+Content-Type: application/json
+
+{
+    "address": "无锡"
+}

@@ -1,6 +1,7 @@
 package com.yeemin.ppgjcx.controller;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -28,7 +29,7 @@ public class DemoController {
     public Map<String, Object> add(@RequestBody User user) {
         String id = UUID.randomUUID().toString();
         user.setId(id);
-        luceneOperation.index(UUID.randomUUID().toString(), user);
+        luceneOperation.index(user);
         demoService.putUser(user);
         return Collections.singletonMap("id", id);
     }
@@ -36,6 +37,25 @@ public class DemoController {
     @RequestMapping("/get/{id}")
     public User get(@PathVariable("id") String id) {
         return demoService.queryUser(id);
+    }
+
+    @RequestMapping("/query")
+    public User query(@RequestBody User criteria) {
+        String address = criteria.getAddress();
+        String id = searchUserByAddress(address);
+        if (id != null) {
+            return demoService.queryUser(id);
+        }
+        return null;
+    }
+
+    private String searchUserByAddress(String address) {
+        List<Map<String, String>> list = luceneOperation.search("address", address);
+        if (!list.isEmpty()) {
+            Map<String, String> map = list.get(0);
+            return map.get("id");
+        }
+        return null;
     }
 
 }
