@@ -1,4 +1,4 @@
-<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd" maxBytesLocalHeap="30K">
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
 
     <diskStore path="./ehcache" />
 
@@ -6,7 +6,7 @@
         <persistence strategy="localTempSwap" />
     </defaultCache>
 
-    <cache name="demo" maxElementsInMemory="10000" eternal="true" timeToIdleSeconds="120" timeToLiveSeconds="120" maxElementsOnDisk="10000000" diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU">
+    <cache name="demo" maxElementsInMemory="10000" eternal="false" timeToIdleSeconds="120" timeToLiveSeconds="120" maxElementsOnDisk="10000000" diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU">
         <persistence strategy="localTempSwap" />
     </cache>
 </ehcache>

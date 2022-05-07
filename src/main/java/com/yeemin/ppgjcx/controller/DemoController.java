@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import com.yeemin.ppgjcx.core.LuceneOperation;
 import com.yeemin.ppgjcx.entity.User;
+import com.yeemin.ppgjcx.service.DemoService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
@@ -21,13 +22,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class DemoController {
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
-
-    @Autowired
     private LuceneOperation luceneOperation;
 
     @Autowired
     CacheManager cacheManager;
+
+    @Autowired
+    private DemoService demoService;
 
     @RequestMapping("/add")
     public Map<String, Object> add(@RequestBody User user) {
@@ -43,6 +44,11 @@ public class DemoController {
     public User get(@PathVariable("id") String id) {
         Cache cache = cacheManager.getCache("demo");
         return cache.get(id, User.class);
+    }
+
+    @RequestMapping("getCache")
+    public User getCache() {
+        return demoService.queryUser("asdfasfd");
     }
 
 }
