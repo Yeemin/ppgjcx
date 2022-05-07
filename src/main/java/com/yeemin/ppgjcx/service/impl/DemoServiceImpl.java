@@ -22,7 +22,7 @@ public class DemoServiceImpl implements DemoService {
     }
 
     @Override
-    @CachePut(value = "demo", key = "'demo.user' + #id")
+    @CachePut(value = "demo", key = "'demo.user' + #user.id")
     public User putUser(User user) {
         return user;
     }
