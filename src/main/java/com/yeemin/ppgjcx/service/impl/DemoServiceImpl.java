@@ -2,7 +2,7 @@ package com.yeemin.ppgjcx.service.impl;
 
 import java.util.Map;
 
-import com.yeemin.ppgjcx.entity.User;
+import com.yeemin.ppgjcx.domain.User;
 import com.yeemin.ppgjcx.service.DemoService;
 
 import org.springframework.beans.factory.annotation.Autowired;

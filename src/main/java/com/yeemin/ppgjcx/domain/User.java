@@ -1,4 +1,4 @@
-package com.yeemin.ppgjcx.entity;
+package com.yeemin.ppgjcx.domain;
 
 import java.io.Serializable;
 

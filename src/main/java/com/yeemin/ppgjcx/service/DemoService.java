@@ -1,6 +1,6 @@
 package com.yeemin.ppgjcx.service;
 
-import com.yeemin.ppgjcx.entity.User;
+import com.yeemin.ppgjcx.domain.User;
 
 public interface DemoService {
     
