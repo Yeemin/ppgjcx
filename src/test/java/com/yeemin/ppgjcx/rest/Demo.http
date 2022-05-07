@@ -9,7 +9,4 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8081/demo/get/67eca4fb-5e3c-4c25-accf-733111a84ea0
-
-###
-GET http://localhost:8081/demo/getCache
+GET http://localhost:8081/demo/get/bb1b6b76-c25b-47ea-b66b-c6a1871aa28c
