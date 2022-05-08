@@ -1,6 +1,8 @@
 package com.yeemin.ppgjcx.lucene;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.yeemin.ppgjcx.repository.entity.BrandCompanyIndex;
 import com.yeemin.ppgjcx.repository.lucene.BrandCompanyIndexDao;
@@ -44,6 +46,14 @@ public class BrandCompanyIndexDaoTests {
     @Test
     public void queryByCompanyName() {
         List<BrandCompanyIndex> list = dao.queryByCompanyName("中国");
+        System.out.println(list);
+    }
+
+    @Test
+    public void queryList() {
+        Map<String, String> criteria = new HashMap<>();
+        criteria.put("brandName", "华为");
+        List<BrandCompanyIndex> list = dao.queryList(criteria, BrandCompanyIndex.class);
         System.out.println(list);
     }
 

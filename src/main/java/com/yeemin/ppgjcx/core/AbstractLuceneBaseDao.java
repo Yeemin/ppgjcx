@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -17,6 +18,9 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.search.BooleanClause.Occur;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.BooleanQuery.Builder;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
@@ -39,6 +43,7 @@ public abstract class AbstractLuceneBaseDao implements LuceneBaseDao, SmartLifec
 
     /**
      * 索引数据
+     * 
      * @param consumer 数据映射
      */
     @Override
@@ -133,11 +138,47 @@ public abstract class AbstractLuceneBaseDao implements LuceneBaseDao, SmartLifec
     }
 
     /**
+     * 查询列表
+     * 
+     * @param criteria 查询条件
+     * @param maxSize  最大查询条数
+     * @param function 字段映射
+     * @return List<T> 数据集合
+     */
+    @Override
+    public <T> List<T> queryList(Map<String, String> criteria, int maxSize, Function<Document, T> function) {
+        try (DirectoryReader reader = DirectoryReader.open(directory)) {
+            IndexSearcher searcher = new IndexSearcher(reader);
+            Builder builder = new BooleanQuery.Builder();
+            criteria.forEach((fieldName, fieldValue) -> {
+                try {
+                    builder.add(new QueryParser(fieldName, ikAnalyzer).parse(fieldValue), Occur.FILTER);
+                } catch (ParseException e) {
+                    logger.error("queryList error", e);
+                    throw new LuceneException(e);
+                }
+            });
+            TopDocs topDocs = searcher.search(builder.build(), maxSize > 1000 ? 1000 : maxSize);
+            ScoreDoc[] scoreDocs = topDocs.scoreDocs;
+            List<T> list = new ArrayList<>();
+            for (ScoreDoc scoreDoc : scoreDocs) {
+                int doc = scoreDoc.doc;
+                Document document = searcher.doc(doc);
+                list.add(function.apply(document));
+            }
+            return list;
+        } catch (IOException e) {
+            logger.error("queryList error", e);
+            throw new LuceneException(e);
+        }
+    }
+
+    /**
      * 根据id更新数据
      * 
-     * @param idFieldName id字段名
+     * @param idFieldName  id字段名
      * @param idFieldValue id字段值
-     * @param consumer 数据内容新增
+     * @param consumer     数据内容新增
      */
     @Override
     public void updateById(String idFieldName, String idFieldValue, Consumer<Document> consumer) {
@@ -154,7 +195,7 @@ public abstract class AbstractLuceneBaseDao implements LuceneBaseDao, SmartLifec
     /**
      * 根据id主键删除数据
      * 
-     * @param idFieldName 主键字段名
+     * @param idFieldName  主键字段名
      * @param idFieldValue 主键字段值
      */
     @Override
