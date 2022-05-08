@@ -5,16 +5,16 @@ import java.io.Serializable;
 import com.yeemin.ppgjcx.core.BaseEntity;
 
 /**
- * 类别信息实体类
+ * 类别实体类
  * 
  * @author yeemin
  */
-public class CateGoryInfo extends BaseEntity implements Serializable {
+public class CategoryInfo extends BaseEntity implements Serializable {
     
     /**
      * 类别名称
      */
-    private String name;
+    public String name;
 
     public String getName() {
         return name;

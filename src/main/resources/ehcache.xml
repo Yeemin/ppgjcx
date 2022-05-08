@@ -6,7 +6,11 @@
         <persistence strategy="localTempSwap" />
     </defaultCache>
 
-    <cache name="demo" maxElementsInMemory="10000" eternal="false" timeToIdleSeconds="1200" timeToLiveSeconds="1200" maxElementsOnDisk="10000000" diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU">
+    <cache name="demo" maxElementsInMemory="10" eternal="false" timeToIdleSeconds="1200" timeToLiveSeconds="1200" maxElementsOnDisk="10000000" diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU">
+        <persistence strategy="localTempSwap" />
+    </cache>
+
+    <cache name="stable" maxElementsInMemory="512" eternal="false" timeToIdleSeconds="3600" timeToLiveSeconds="3600" maxElementsOnDisk="10000000" diskExpiryThreadIntervalSeconds="600" memoryStoreEvictionPolicy="LRU">
         <persistence strategy="localTempSwap" />
     </cache>
 </ehcache>

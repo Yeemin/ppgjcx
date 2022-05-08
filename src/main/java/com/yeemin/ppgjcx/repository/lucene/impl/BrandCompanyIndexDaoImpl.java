@@ -12,6 +12,11 @@ import org.apache.lucene.document.StringField;
 import org.apache.lucene.document.TextField;
 import org.springframework.stereotype.Repository;
 
+/**
+ * 品牌公司索引数据层
+ * 
+ * @author yeemin
+ */
 @Repository
 public class BrandCompanyIndexDaoImpl extends AbstractLuceneBaseDao implements BrandCompanyIndexDao {
 
