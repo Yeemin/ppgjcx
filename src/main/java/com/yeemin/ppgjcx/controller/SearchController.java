@@ -1,7 +1,6 @@
 package com.yeemin.ppgjcx.controller;
 
 import com.yeemin.ppgjcx.domain.vo.SearchResponseVO;
-import com.yeemin.ppgjcx.domain.vo.SearchResultVO;
 import com.yeemin.ppgjcx.service.SearchService;
 
 import org.slf4j.Logger;

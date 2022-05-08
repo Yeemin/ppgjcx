@@ -16,16 +16,6 @@ public class BrandInfo extends BaseEntity implements Serializable {
      */
     private String name;
 
-    /**
-     * 公司id
-     */
-    private Integer companyId;
-
-    /**
-     * 类别id
-     */
-    private Integer categoryId;
-
     public String getName() {
         return name;
     }
@@ -33,22 +23,5 @@ public class BrandInfo extends BaseEntity implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-
-    public Integer getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(Integer companyId) {
-        this.companyId = companyId;
-    }
-
-    public Integer getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
-    }
-    
 
 }
