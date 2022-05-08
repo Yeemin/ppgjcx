@@ -2,12 +2,14 @@ package com.yeemin.ppgjcx.repository.entity;
 
 import java.io.Serializable;
 
+import com.yeemin.ppgjcx.core.BaseEntity;
+
 /**
  * 公司国家信息实体类
  * 
  * @author yeemin
  */
-public class CompanyCountryInfo implements Serializable {
+public class CompanyCountryInfo extends BaseEntity implements Serializable {
     
     /**
      * 公司id

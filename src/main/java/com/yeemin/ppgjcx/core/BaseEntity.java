@@ -1,4 +1,4 @@
-package com.yeemin.ppgjcx.repository.entity;
+package com.yeemin.ppgjcx.core;
 
 /**
  * 数据库对应实体类基类

@@ -2,12 +2,14 @@ package com.yeemin.ppgjcx.repository.entity;
 
 import java.io.Serializable;
 
+import com.yeemin.ppgjcx.core.BaseEntity;
+
 /**
  * 类别信息实体类
  * 
  * @author yeemin
  */
-public class CateGoryInfo implements Serializable {
+public class CateGoryInfo extends BaseEntity implements Serializable {
     
     /**
      * 类别名称

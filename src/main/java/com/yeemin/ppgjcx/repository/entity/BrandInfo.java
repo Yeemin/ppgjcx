@@ -2,6 +2,8 @@ package com.yeemin.ppgjcx.repository.entity;
 
 import java.io.Serializable;
 
+import com.yeemin.ppgjcx.core.BaseEntity;
+
 /**
  * 品牌信息实体类
  * 

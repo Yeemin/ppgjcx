@@ -1,10 +1,11 @@
-package com.yeemin.ppgjcx.repository.lucene;
+package com.yeemin.ppgjcx.repository.lucene.impl;
 
 import java.util.List;
 import java.util.Optional;
 
-import com.yeemin.ppgjcx.core.LuceneOperation;
-import com.yeemin.ppgjcx.repository.entity.BrandCompanySearchInfo;
+import com.yeemin.ppgjcx.core.AbstractLuceneBaseDao;
+import com.yeemin.ppgjcx.repository.entity.BrandCompanyIndex;
+import com.yeemin.ppgjcx.repository.lucene.BrandCompanyIndexDao;
 
 import org.apache.lucene.document.Field.Store;
 import org.apache.lucene.document.StringField;
@@ -12,18 +13,14 @@ import org.apache.lucene.document.TextField;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class BrandCompanySearchQueryer extends LuceneOperation {
-
-    public long countByBrandId(Integer brandId) {
-        return countByTermQuery("brandId", String.valueOf(brandId));
-    }
+public class BrandCompanyIndexDaoImpl extends AbstractLuceneBaseDao implements BrandCompanyIndexDao {
 
     /**
      * 索引数据
      * 
      * @param brandCompanySearchInfo 数据
      */
-    public void index(BrandCompanySearchInfo brandCompanySearchInfo) {
+    public void index(BrandCompanyIndex brandCompanySearchInfo) {
         index(doc -> {
             doc.add(new StringField("brandId", String.valueOf(brandCompanySearchInfo.getBrandId()), Store.YES));
             doc.add(new TextField("brandName", brandCompanySearchInfo.getBrandName(), Store.YES));
@@ -32,8 +29,13 @@ public class BrandCompanySearchQueryer extends LuceneOperation {
         });
     }
 
-    public void update(BrandCompanySearchInfo brandCompanySearchInfo) {
-        update("brandId", String.valueOf(brandCompanySearchInfo.getBrandId()),
+    /**
+     * 更新索引数据
+     * 
+     * @param brandCompanySearchInfo 数据
+     */
+    public void update(BrandCompanyIndex brandCompanySearchInfo) {
+        updateById("brandId", String.valueOf(brandCompanySearchInfo.getBrandId()),
                 doc -> {
                     Optional.ofNullable(brandCompanySearchInfo.getBrandId()).map(String::valueOf)
                             .ifPresent(value -> doc.add(new StringField("brandId", value, Store.YES)));
@@ -51,10 +53,10 @@ public class BrandCompanySearchQueryer extends LuceneOperation {
      * 
      * @param brandName 品牌名
      */
-    public List<BrandCompanySearchInfo> queryByBrandName(String brandName) {
-        return queryParser("brandName", brandName,
+    public List<BrandCompanyIndex> queryByBrandName(String brandName) {
+        return queryListBySingleField("brandName", brandName,
                 document -> {
-                    BrandCompanySearchInfo info = new BrandCompanySearchInfo();
+                    BrandCompanyIndex info = new BrandCompanyIndex();
                     info.setBrandId(Integer.parseInt(document.get("brandId")));
                     info.setBrandName(document.get("brandName"));
                     info.setCompanyId(Integer.parseInt(document.get("companyId")));
@@ -68,10 +70,10 @@ public class BrandCompanySearchQueryer extends LuceneOperation {
      * 
      * @param brandName 品牌名
      */
-    public List<BrandCompanySearchInfo> queryByCompanyName(String companyName) {
-        return queryParser("companyName", companyName,
+    public List<BrandCompanyIndex> queryByCompanyName(String companyName) {
+        return queryListBySingleField("companyName", companyName,
                 document -> {
-                    BrandCompanySearchInfo info = new BrandCompanySearchInfo();
+                    BrandCompanyIndex info = new BrandCompanyIndex();
                     info.setBrandId(Integer.parseInt(document.get("brandId")));
                     info.setBrandName(document.get("brandName"));
                     info.setCompanyId(Integer.parseInt(document.get("companyId")));
@@ -80,8 +82,18 @@ public class BrandCompanySearchQueryer extends LuceneOperation {
                 });
     }
 
+    /**
+     * 根据品牌id删除索引数据
+     * 
+     * @param brandId 品牌id
+     */
     public void deleteByBrandId(Integer brandId) {
-        deleteByQuery("brandId", String.valueOf(brandId));
+        deleteById("brandId", String.valueOf(brandId));
+    }
+
+    @Override
+    protected String getDic() {
+        return "brandCompany";
     }
 
 }

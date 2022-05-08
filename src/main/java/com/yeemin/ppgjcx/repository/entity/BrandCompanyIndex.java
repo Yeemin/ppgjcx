@@ -2,7 +2,7 @@ package com.yeemin.ppgjcx.repository.entity;
 
 import java.io.Serializable;
 
-public class BrandCompanySearchInfo implements Serializable {
+public class BrandCompanyIndex implements Serializable {
 
     private Integer brandId;
 
@@ -46,7 +46,7 @@ public class BrandCompanySearchInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "BrandCompanySearchInfo [brandId=" + brandId + ", brandName=" + brandName + ", companyId=" + companyId
+        return "BrandCompanySO [brandId=" + brandId + ", brandName=" + brandName + ", companyId=" + companyId
                 + ", companyName=" + companyName + "]";
     }
 
