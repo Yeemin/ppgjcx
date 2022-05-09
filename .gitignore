@@ -37,3 +37,4 @@ build/
 /lucene
 /ehcache
 *.trace.db
+*.DS_STORE
