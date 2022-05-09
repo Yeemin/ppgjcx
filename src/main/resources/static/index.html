@@ -5,31 +5,107 @@
     <title>demo</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/2.0.1/weui.min.css">
+    <link rel="stylesheet" href="./css/example.css">
     <script type="text/javascript" src="https://res.wx.qq.com/t/wx_fed/cdn_libs/res/weui/1.2.3/weui.min.js"></script>
-
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
     <meta name="viewport"
         content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
 </head>
 
 <body>
     <!-- <a href="https://github.com/Tencent/weui.js/blob/master/docs/README.md">查看文档</a> -->
+    <div class="page__bd">
+        <div class="weui-search-bar" id="searchBar">
+            <form class="weui-search-bar__form" id="searchForm" action="#">
+                <div class="weui-search-bar__box">
+                    <i class="weui-icon-search"></i>
+                    <input type="search" class="weui-search-bar__input" id="searchQ" placeholder="请输入品牌名" required="">
+                    <a href="javascript:" class="weui-icon-clear"></a>
+                </div>
+                <label class="weui-search-bar__label">
+                    <i class="weui-icon-search"></i>
+                    <span>请输入品牌名</span>
+                </label>
+            </form>
+            <a href="javascript:" class="weui-search-bar__cancel-btn">取消</a>
+        </div>
 
-    <div class="weui-search-bar" id="searchBar">
-        <form class="weui-search-bar__form">
-            <div class="weui-search-bar__box">
-                <i class="weui-icon-search"></i>
-                <input type="search" class="weui-search-bar__input" placeholder="搜索" required="">
-                <a href="javascript:" class="weui-icon-clear"></a>
+        <div id="result"></div>
+        <!-- <div class="weui-panel weui-panel_access">
+            <div class="weui-panel__hd">索爱手机</div>
+            <div class="weui-panel__bd">
+                <div role="option" class="weui-media-box weui-media-box_text">
+                    <strong class="weui-media-box__title">[国旗]日本</strong>
+                    <p class="weui-media-box__desc">
+                        索尼|爱立信公司
+                    </p>
+                    <ul class="weui-media-box__info" aria-hidden="true">
+                        <li class="weui-media-box__info__meta" aria-hidden="true">手机</li>
+                    </ul>
+                </div>
             </div>
-            <label class="weui-search-bar__label">
-                <i class="weui-icon-search"></i>
-                <span>搜索</span>
-            </label>
-        </form>
-        <a href="javascript:" class="weui-search-bar__cancel-btn">取消</a>
+        </div> -->
+        <div id="noresult" class="weui-msg" style="display: none;">
+            <div class="weui-msg__icon-area"><i class="weui-icon-warn weui-icon_msg"></i></div>
+            <div class="weui-msg__text-area">
+                <h2 class="weui-msg__title">未查询到数据</h2>
+                <p class="weui-msg__desc" id="noresult-desc"></p>
+            </div>
+        </div>
+
     </div>
-    <!-- <a href="javascript:" role="button" class="weui-btn weui-btn_primary">查询</a> -->
-    <script type="text/javascript" src="./js/index.js"></script>
+    <div class="page__ft j_bottom">
+        赞助一下
+    </div>
+    <script type="text/javascript">
+        weui.searchBar('#searchBar');
+
+        $().ready(function () {
+
+            $('#searchForm').on('submit', function () {
+                let q = $('#searchQ').val()
+                console.log(q)
+                $.get("/search?q=" + q, function (data) {
+                    $('#result').empty()
+                    let results = data.result
+                    let html = ''
+                    results.forEach(element => {
+                        html += '<div class="weui-panel weui-panel_access">'
+                        html += '<div class="weui-panel__hd">'
+                        html += element.brand
+                        html += '</div>'
+                        html += '<div class="weui-panel__bd">'
+                        html += '<div role="option" class="weui-media-box weui-media-box_text">'
+                        html += '<strong class="weui-media-box__title">'
+                        element.country.forEach(country => {
+                            html += country.name + '|'
+                        })
+                        html = html.substring(0, html.length - 1)
+                        html += '</strong>'
+                        html += '<p class="weui-media-box__desc">'
+                        element.company.forEach(company => {
+                            html += company.name + "|"
+                        })
+                        html = html.substring(0, html.length - 1)
+                        html += '</p>'
+                        html += '<ul class="weui-media-box__info" aria-hidden="true">'
+                        html += '<li class="weui-media-box__info__meta" aria-hidden="true">'
+                        element.category.forEach(category => html += category + "|")
+                        html = html.substring(0, html.length - 1)
+                        html += '</ul></div></div></div>'
+                    });
+                    if (html === '') {
+                        $('#noresult-desc').html('你输入的品牌【' + q + '】查不到数据')
+                        $('#noresult').show()
+                    } else {
+                        $('#noresult').hide()
+                        $('#result').html(html)
+                    }
+                })
+            })
+
+        });
+    </script>
 </body>
 
 </html>
