@@ -50,9 +50,21 @@
             <div class="weui-msg__text-area">
                 <h2 class="weui-msg__title">未查询到数据</h2>
                 <p class="weui-msg__desc" id="noresult-desc"></p>
+                <p class="weui-msg__desc">
+                    <a href="javascript:" class="weui-btn weui-btn_default" id="addDataBtn"
+                        wah-hotarea="click">帮我完善数据</a>
+                </p>
             </div>
         </div>
-
+        <div id="thanksAdd" class="weui-msg" style="display: none;">
+            <div class="weui-msg__icon-area"><i class="weui-icon-success weui-icon_msg"></i></div>
+            <div class="weui-msg__text-area">
+                <h2 class="weui-msg__title">反馈成功</h2>
+                <p class="weui-msg__desc" id="noresult-desc">
+                    感谢您的帮助，数据将会尽快维护进去，谢谢你，因为有你，世界更美丽~~~
+                </p>
+            </div>
+        </div>
     </div>
     <div class="page__ft j_bottom">
         赞助一下
@@ -64,7 +76,7 @@
 
             $('#searchForm').on('submit', function () {
                 let q = $('#searchQ').val()
-                console.log(q)
+                $('#thanksAdd').hide()
                 $.get("/search?q=" + q, function (data) {
                     $('#result').empty()
                     let results = data.result
@@ -95,13 +107,39 @@
                         html += '</ul></div></div></div>'
                     });
                     if (html === '') {
-                        $('#noresult-desc').html('你输入的品牌【' + q + '】查不到数据')
+                        $('#noresult-desc').html('你输入的品牌【<span style="color: RED">' + q + '</span>】查不到数据')
                         $('#noresult').show()
                     } else {
                         $('#noresult').hide()
                         $('#result').html(html)
                     }
                 })
+            })
+
+            $('#addDataBtn').on('click', function () {
+                let q = $('#searchQ').val()
+                weui.dialog({
+                    title: '帮我完善数据',
+                    content: '是否想要管理员录入名为【<span style="color: RED">' + q + '</span>】的品牌信息？',
+                    className: 'custom-classname',
+                    buttons: [{
+                        label: '取消',
+                        type: 'default',
+                        onClick: function () {
+                            $('#thanksAdd').hide()
+                            $('#searchQ').val('')
+                        }
+                    }, {
+                        label: '确定',
+                        type: 'primary',
+                        onClick: function () { 
+                            // todo 上传数据
+                            $('#searchQ').val('')
+                            $('#noresult').hide()
+                            $('#thanksAdd').show()
+                        }
+                    }]
+                });
             })
 
         });
