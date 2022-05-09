@@ -127,10 +127,14 @@
                     content: contentHtml,
                     className: 'give-me-money',
                     buttons: [{
-                        label: '确定',
+                        label: '这次一定',
                         type: 'primary',
                         onClick: function () {
-                            alert('a')
+                        }
+                    }, {
+                        label: '下次一定',
+                        type: 'default',
+                        onClick: function () {
                         }
                     }]
                 });
