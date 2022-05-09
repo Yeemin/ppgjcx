@@ -38,3 +38,4 @@ build/
 /ehcache
 *.trace.db
 *.DS_STORE
+*.mv.db
