@@ -64,9 +64,8 @@ public class SearchServiceImpl implements SearchService {
         List<BrandCompanyIndex> indexs = indexDao.queryByBrandName(q);
         List<SearchResultVO> resultVOS = new ArrayList<>();
         if (indexs.size() > 0) {
-            indexs.forEach(index -> {
+            indexs.stream().map(BrandCompanyIndex::getBrandId).distinct().forEach(brandId -> {
                 SearchResultVO resultVO = new SearchResultVO();
-                Integer brandId = index.getBrandId();
                 // 品牌信息
                 BrandInfo brandInfo = brandInfoDao.queryById(brandId);
                 resultVO.setBrand(brandInfo.getName());

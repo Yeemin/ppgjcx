@@ -16,14 +16,14 @@ public interface BrandCompanyIndexDao extends LuceneBaseDao {
      * 
      * @param brandCompanySearchInfo 数据
      */
-    void index(BrandCompanyIndex brandCompanySearchInfo);
+    void index(BrandCompanyIndex brandCompanyIndex);
 
     /**
      * 更新索引数据
      * 
      * @param brandCompanySearchInfo 数据
      */
-    void update(BrandCompanyIndex brandCompanySearchInfo);
+    void update(BrandCompanyIndex brandCompanyIndex);
 
     /**
      * 根据品牌名查询

@@ -217,7 +217,7 @@ public abstract class AbstractLuceneBaseDao implements LuceneBaseDao, SmartLifec
             indexWriter.deleteAll();
         } catch (Exception e) {
             logger.error("deleteAll error", e);
-            throw new LuceneException(e);
+            // throw new LuceneException(e);
         }
     }
 
