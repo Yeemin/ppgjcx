@@ -69,18 +69,21 @@
     <div class="page__ft j_bottom">
         <a href="javascript:" id="giveMeMoney" wah-hotarea="click">赞助一下</a>
     </div>
+    
     <script type="text/javascript">
         weui.searchBar('#searchBar');
 
 
         $().ready(function () {
 
+            let searchQ;
+
             $('#searchForm').submit()
 
             $('#searchForm').on('submit', function () {
-                let q = $('#searchQ').val()
+                searchQ = $('#searchQ').val()
                 $('#thanksAdd').hide()
-                $.get("/search?q=" + q, function (data) {
+                $.get("/search?q=" + searchQ, function (data) {
                     $('#result').empty()
                     let results = data.result
                     let html = ''
@@ -110,7 +113,7 @@
                         html += '</ul></div></div></div>'
                     });
                     if (html === '') {
-                        $('#noresult-desc').html('你输入的品牌【<span style="color: RED">' + q + '</span>】查不到数据')
+                        $('#noresult-desc').html('你输入的品牌【<span style="color: RED">' + searchQ + '</span>】查不到数据')
                         $('#noresult').show()
                     } else {
                         $('#noresult').hide()
@@ -156,10 +159,9 @@
             })
 
             $('#addDataBtn').on('click', function () {
-                let q = $('#searchQ').val()
                 weui.dialog({
                     title: '帮我完善数据',
-                    content: '是否想要管理员录入名为【<span style="color: RED">' + q + '</span>】的品牌信息？',
+                    content: '是否想要管理员录入名为【<span style="color: RED">' + searchQ + '</span>】的品牌信息？',
                     className: 'add-data',
                     buttons: [{
                         label: '取消',
