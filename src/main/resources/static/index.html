@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./css/example.css">
     <script type="text/javascript" src="https://res.wx.qq.com/t/wx_fed/cdn_libs/res/weui/1.2.3/weui.min.js"></script>
     <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="./js/emoji.js"></script>
     <meta name="viewport"
         content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
 </head>
@@ -67,18 +68,28 @@
         </div>
     </div>
     <div class="page__ft j_bottom">
-        <a href="javascript:" id="giveMeMoney" wah-hotarea="click">赞助一下</a>
+        <a href="javascript:" id="giveMeMoney" wah-hotarea="click">
+            <span custom-emoji="love"></span>
+            <span custom-emoji="love"></span>
+            <span custom-emoji="love"></span>
+            赞助一下
+            <span custom-emoji="love"></span>
+            <span custom-emoji="love"></span>
+            <span custom-emoji="love"></span>
+        </a>
     </div>
     
     <script type="text/javascript">
-        weui.searchBar('#searchBar');
 
+        weui.searchBar('#searchBar');
 
         $().ready(function () {
 
             let searchQ;
 
             $('#searchForm').submit()
+
+            $.initEmoji()
 
             $('#searchForm').on('submit', function () {
                 searchQ = $('#searchQ').val()
@@ -96,7 +107,7 @@
                         html += '<div role="option" class="weui-media-box weui-media-box_text">'
                         html += '<strong class="weui-media-box__title">'
                         element.country.forEach(country => {
-                            html += country.name + '|'
+                            html += '<span country-emoji="' + country.flag + '"></span>' + country.name + '|'
                         })
                         html = html.substring(0, html.length - 1)
                         html += '</strong>'
@@ -119,6 +130,7 @@
                         $('#noresult').hide()
                         $('#result').html(html)
                     }
+                    $.initCountryEmoji()
                 })
             })
 
