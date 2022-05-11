@@ -16,14 +16,14 @@
 <body>
     <!-- <a href="https://github.com/Tencent/weui.js/blob/master/docs/README.md">查看文档</a> -->
     <div class="page__bd">
-        <div class="weui-search-bar" id="searchBar">
+        <div class="weui-search-bar" id="searchBar" style="line-height: 2.4">
             <form class="weui-search-bar__form" id="searchForm" action="#">
                 <div class="weui-search-bar__box">
                     <i class="weui-icon-search"></i>
                     <input type="search" class="weui-search-bar__input" id="searchQ" placeholder="请输入品牌名" required="">
                     <a href="javascript:" class="weui-icon-clear"></a>
                 </div>
-                <label class="weui-search-bar__label">
+                <label class="weui-search-bar__label" style="line-height: 2.4; top: 4px">
                     <i class="weui-icon-search"></i>
                     <span>请输入品牌名</span>
                 </label>
@@ -100,12 +100,12 @@
                     let html = ''
                     results.forEach(element => {
                         html += '<div class="weui-panel weui-panel_access">'
-                        html += '<div class="weui-panel__hd">'
+                        html += '<div class="weui-panel__hd" style="font-size: 18px">'
                         html += element.brand
                         html += '</div>'
                         html += '<div class="weui-panel__bd">'
                         html += '<div role="option" class="weui-media-box weui-media-box_text">'
-                        html += '<strong class="weui-media-box__title">'
+                        html += '<strong class="weui-media-box__title" style="font-size: 20px">'
                         element.country.forEach(country => {
                             html += '<span country-emoji="' + country.flag + '"></span>' + country.name + '|'
                         })
