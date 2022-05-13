@@ -44,6 +44,24 @@
                         <li class="weui-media-box__info__meta" aria-hidden="true">手机</li>
                     </ul>
                 </div>
+                <div role="option" class="weui-media-box weui-media-box_text">
+                    <strong class="weui-media-box__title">[国旗]日本</strong>
+                    <p class="weui-media-box__desc">
+                        索尼|爱立信公司
+                    </p>
+                    <ul class="weui-media-box__info" aria-hidden="true">
+                        <li class="weui-media-box__info__meta" aria-hidden="true">手机</li>
+                    </ul>
+                </div>
+                <div role="option" class="weui-media-box weui-media-box_text">
+                    <strong class="weui-media-box__title">[国旗]日本</strong>
+                    <p class="weui-media-box__desc">
+                        索尼|爱立信公司
+                    </p>
+                    <ul class="weui-media-box__info" aria-hidden="true">
+                        <li class="weui-media-box__info__meta" aria-hidden="true">手机</li>
+                    </ul>
+                </div>
             </div>
         </div> -->
         <div id="noresult" class="weui-msg" style="display: none;">
@@ -78,7 +96,8 @@
             <span custom-emoji="love"></span>
         </a>
     </div>
-    
+
+    <script type="text/javascript" src="./js/giveMeMoney.js"></script>
     <script type="text/javascript">
 
         weui.searchBar('#searchBar');
@@ -97,76 +116,42 @@
                 $.get("/search?q=" + searchQ, function (data) {
                     $('#result').empty()
                     let results = data.result
-                    let html = ''
-                    results.forEach(element => {
-                        html += '<div class="weui-panel weui-panel_access">'
-                        html += '<div class="weui-panel__hd" style="font-size: 18px">'
-                        html += element.brand
-                        html += '</div>'
-                        html += '<div class="weui-panel__bd">'
-                        html += '<div role="option" class="weui-media-box weui-media-box_text">'
-                        html += '<strong class="weui-media-box__title" style="font-size: 20px">'
-                        element.country.forEach(country => {
-                            html += '<span country-emoji="' + country.flag + '"></span>' + country.name + '|'
-                        })
-                        html = html.substring(0, html.length - 1)
-                        html += '</strong>'
-                        html += '<p class="weui-media-box__desc">'
-                        element.company.forEach(company => {
-                            html += company.name + "|"
-                        })
-                        html = html.substring(0, html.length - 1)
-                        html += '</p>'
-                        html += '<ul class="weui-media-box__info" aria-hidden="true">'
-                        html += '<li class="weui-media-box__info__meta" aria-hidden="true">'
-                        element.category.forEach(category => html += category + "|")
-                        html = html.substring(0, html.length - 1)
-                        html += '</ul></div></div></div>'
-                    });
-                    if (html === '') {
+                    if (results.length === 0) {
                         $('#noresult-desc').html('你输入的品牌【<span style="color: RED">' + searchQ + '</span>】查不到数据')
                         $('#noresult').show()
                     } else {
+                        let html = ''
+                        html += '<div class="weui-panel weui-panel_access">'
+                        html += '<div class="weui-panel__hd">'
+                        html += '<span style="color: RED">'
+                        html += searchQ
+                        html += '</span>的查询结果</div>'
+                        html += '<div class="weui-panel__bd">'
+                        results.forEach(element => {
+                            html += '<div role="option" class="weui-media-box weui-media-box_text">'
+                            html += '<strong class="weui-media-box__title">'
+                            element.country.forEach(country => {
+                                html += '<span country-emoji="' + country.flag + '"></span>' + country.name + '|'
+                            })
+                            html = html.substring(0, html.length - 1)
+                            html += '</strong>'
+                            html += '<p class="weui-media-box__desc">'
+                            element.company.forEach(company => {
+                                html += company.name + "|"
+                            })
+                            html = html.substring(0, html.length - 1)
+                            html += '</p>'
+                            html += '<ul class="weui-media-box__info" aria-hidden="true">'
+                            html += '<li class="weui-media-box__info__meta" aria-hidden="true">'
+                            element.category.forEach(category => html += category + "|")
+                            html = html.substring(0, html.length - 1)
+                            html += '</ul></div>'
+                        });
+                        html += '</div></div>'
                         $('#noresult').hide()
                         $('#result').html(html)
                     }
                     $.initCountryEmoji()
-                })
-            })
-
-            $('#giveMeMoney').on('click', function () {
-                let moneyQrcode = 1
-                let contentHtml = '<p id="giveMeMondyText">个人开发，服务器真贵，感谢赞助，截图保存，<span style="color: #1890FF">支付宝</span>扫一扫打开本地相册</p><br>'
-                contentHtml += '<img id="giveMeMondyQrcode" style="width: 260px; height: 260px" src="./img/zfbskm.png"></img><br>'
-                contentHtml += '<a href="javascript:" id="changeMondyQrcode">更换赞助方式</>';
-
-                weui.dialog({
-                    title: '赞助一下',
-                    content: contentHtml,
-                    className: 'give-me-money',
-                    buttons: [{
-                        label: '这次一定',
-                        type: 'primary',
-                        onClick: function () {
-                        }
-                    }, {
-                        label: '下次一定',
-                        type: 'default',
-                        onClick: function () {
-                        }
-                    }]
-                });
-
-                $('#changeMondyQrcode').on('click', function () {
-                    if (moneyQrcode === 1) {
-                        moneyQrcode = 2
-                        $('#giveMeMondyQrcode').attr('src', './img/wxskm.png')
-                        $('#giveMeMondyText').html('个人开发，服务器真贵，感谢赞助，截图保存，<span style="color: #04BE02">微信</span>扫一扫打开本地相册')
-                    } else {
-                        moneyQrcode = 1
-                        $('#giveMeMondyQrcode').attr('src', './img/zfbskm.png')
-                        $('#giveMeMondyText').html('个人开发，服务器真贵，感谢赞助，截图保存，<span style="color: #1890FF">支付宝</span>扫一扫打开本地相册')
-                    }
                 })
             })
 
